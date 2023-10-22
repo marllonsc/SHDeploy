@@ -6,7 +6,7 @@ public class ExecuteSh {
 	
 	public  static  boolean execute(String scriptPath) {
 		
-		scriptPath = "/home/wolf/test.sh";
+		//scriptPath = "/home/wolf/test.sh";
 
         Process process;
         try {
