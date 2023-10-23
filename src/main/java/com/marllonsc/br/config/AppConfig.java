@@ -13,6 +13,7 @@ public class AppConfig {
     private String fileInit;
     private String fileDeploy;
     private String fileService;
+    private String dbService;
 
     public String getRoot() {
         return root;
@@ -61,5 +62,15 @@ public class AppConfig {
     public String getFileService() {
         return fileService;
     }
+
+	public String getDbService() {
+		return dbService;
+	}
+
+	public void setDbService(String dbService) {
+		this.dbService = dbService;
+	}
+    
+    
     
 }

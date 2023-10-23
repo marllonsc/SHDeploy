@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import com.marllonsc.br.config.AppConfig;
 import com.marllonsc.br.dto.Message;
 import com.marllonsc.br.entity.Project;
 import com.marllonsc.br.service.ProjectService;
@@ -20,13 +21,16 @@ import com.marllonsc.br.util.ExecuteCommand;
 public class RouterController {
 	
 	private final ProjectService projectService;
+	
+	private final AppConfig appConfig;
 
 	private static String message;
 	private static int status;
 
 	@Autowired
-	public RouterController(ProjectService projectService) {
+	public RouterController(ProjectService projectService, AppConfig appConfig) {
 		this.projectService = projectService;
+		this.appConfig = appConfig;
 		message = "";
 		status = 0;
 	}
@@ -36,7 +40,7 @@ public class RouterController {
 		List<Project> list = new ArrayList<Project>();
 		list = projectService.getAllProjects();
 		model.addAttribute("list",list);
-		model.addAttribute("Mysql",ExecuteCommand.executeGetReturn("minikube service mysql-service --url"));
+		model.addAttribute("Mysql",ExecuteCommand.executeGetReturn("minikube service "+appConfig.getDbService()+" --url"));
 		if(!message.isBlank()){
 			model.addAttribute("message",message);
 			model.addAttribute("status",status);
