@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import com.marllonsc.br.dto.Message;
 import com.marllonsc.br.entity.Project;
 import com.marllonsc.br.service.ProjectService;
+import com.marllonsc.br.util.ExecuteCommand;
 
 @Controller
 public class RouterController {
@@ -35,6 +36,7 @@ public class RouterController {
 		List<Project> list = new ArrayList<Project>();
 		list = projectService.getAllProjects();
 		model.addAttribute("list",list);
+		model.addAttribute("Mysql",ExecuteCommand.executeGetReturn("minikube service mysql-service --url"));
 		if(!message.isBlank()){
 			model.addAttribute("message",message);
 			model.addAttribute("status",status);
