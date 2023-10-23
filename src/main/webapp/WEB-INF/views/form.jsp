@@ -12,9 +12,9 @@
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 
 <script type="text/javascript">
-	function alertName() {
-		alert("Success! Your project has been created successfully.");
-	}
+	//function alertName() {
+	//	alert("Success! Your project has been created successfully.");
+	//}
 </script>
 
 </head>
@@ -73,16 +73,21 @@
 							placeholder="Enter project name" required>
 					</div>
 					<div class="form-group">
+						<label for="projectName">Path App</label> <input type="text"
+							class="form-control" id="projectPath" name="pathApp"
+							placeholder="Enter project path App">
+					</div>
+					<div class="form-group">
 						<label for="projectName">Path Project</label> <input type="text"
-							class="form-control" id="projectName" name="path"
-							placeholder="Enter project name">
+							class="form-control" id="appPath" name="pathProject"
+							placeholder="Enter project Path project">
 					</div>
 					<div class="form-group">
 						<label for="gitField">Git</label> <input type="text"
 							class="form-control" id="gitField" name="git"
 							placeholder="Enter Git URL" required>
 					</div>
-					<button type="submit" OnClick="alertName()" class="btn btn-primary">Create</button>
+					<button type="submit" OnClick="" class="btn btn-primary">Create</button>
 				</form>
 			</div>
 		</div>

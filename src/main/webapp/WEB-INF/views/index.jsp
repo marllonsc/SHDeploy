@@ -14,7 +14,7 @@
 <body>
 
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-        <a class="navbar-brand" href="#">HSDeploy</a>
+        <a class="navbar-brand" href="${pageContext.request.contextPath}/">HSDeploy</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -47,6 +47,18 @@
         <!-- Add any header content here -->
     </header>
 
+    <c:if test="${message != '' && message != null}">
+        <div class="container mt-3">
+            <div class="alert alert-${status == 1 ? 'success' : 'danger'} alert-dismissible fade show" role="alert">
+                <strong>Message: </strong> ${message}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        </div>
+    </c:if>
+
+    
     <main class="container mt-4">
     
      <!-- Your main content goes here -->
@@ -73,29 +85,33 @@
 								Project</a>
 						</c:if>
 						<c:if test="${project.deploy == 0}">
-							<a class="btn btn-success">Deploy
+							<a class="btn btn-success" href="${pageContext.request.contextPath}/deploy_project/${project.id}">Deploy
 								Project</a>
 						</c:if>
 						<c:if test="${project.deploy != 0}">
-							<a class="btn btn-warning">UnDeploy
+							<a class="btn btn-warning" href="${pageContext.request.contextPath}/del_deploy_project/${project.id}">UnDeploy
 								Project</a>
 						</c:if>
 						<c:if test="${project.service == 0}">
-							<a class="btn btn-success">Create
+							<a class="btn btn-success" href="${pageContext.request.contextPath}/service_project/${project.id}">Create
 								Service</a>
 						</c:if>
 						<c:if test="${project.service != 0}">
-							<a class="btn btn-warning">Delete
+							<a class="btn btn-warning" href="${pageContext.request.contextPath}/del_service_project/${project.id}">Delete
 								Service</a>
 						</c:if>
-						<a class="btn btn-danger">Delete
-							Project</a>
+						<c:if test="${project.service == 0 && project.deploy == 0}">
+							<a class="btn btn-danger" href="${pageContext.request.contextPath}/del_project/${project.id}">Delete
+								Project</a>
+						</c:if>
+								
 					</div>
 
 					<!-- Information List -->
                 <ul class="list-group mt-3">
                     <li class="list-group-item"><b>Name: </b>${project.name}</li>
-                    <li class="list-group-item"><b>Path: </b>${project.path}</li>
+                    <li class="list-group-item"><b>Path Project: </b>${project.pathProject}</li>
+                    <li class="list-group-item"><b>Path App: </b>${project.pathApp}</li>
                     <li class="list-group-item"><b>git: </b>${project.git}</li>
                     <li class="list-group-item"><b>Service: </b>${project.ipPort}</li>
                     <li class="list-group-item"><b>Service Created: </b>${project.service == 0 ? false : true}</li>

@@ -13,18 +13,20 @@ public class Project {
 	private Long id;
 
 	private String name;
-	private String path;
+	private String pathProject;
+	private String pathApp;
 	private String git;
 	private String ipPort;
 	private int service;
 	private int init;
 	private int deploy;
 
-	public Project(Long id, String name, String path, String git, String ipPort, int service, int init, int deploy) {
+	public Project(Long id, String name, String pathProject, String pathApp, String git, String ipPort, int service, int init, int deploy) {
 		super();
 		this.id = id;
 		this.name = name;
-		this.path = path;
+		this.pathProject = pathProject;
+		this.pathApp = pathApp;
 		this.git = git;
 		this.ipPort = ipPort;
 		this.service = service;
@@ -50,12 +52,20 @@ public class Project {
 		this.name = name;
 	}
 
-	public String getPath() {
-		return path;
+	public String getPathProject() {
+		return pathProject;
 	}
 
-	public void setPath(String path) {
-		this.path = path;
+	public void setPathProject(String pathProject) {
+		this.pathProject = pathProject;
+	}
+
+	public String getPathApp() {
+		return this.pathApp;
+	}
+
+	public void setPathApp(String pathApp) {
+		this.pathApp = pathApp;
 	}
 
 	public String getGit() {

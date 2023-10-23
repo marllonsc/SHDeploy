@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 
+import com.marllonsc.br.dto.Message;
 import com.marllonsc.br.entity.Project;
 import com.marllonsc.br.service.ProjectService;
 
@@ -20,9 +20,14 @@ public class RouterController {
 	
 	private final ProjectService projectService;
 
+	private static String message;
+	private static int status;
+
 	@Autowired
 	public RouterController(ProjectService projectService) {
 		this.projectService = projectService;
+		message = "";
+		status = 0;
 	}
 	
 	@GetMapping("/")
@@ -30,25 +35,81 @@ public class RouterController {
 		List<Project> list = new ArrayList<Project>();
 		list = projectService.getAllProjects();
 		model.addAttribute("list",list);
+		if(!message.isBlank()){
+			model.addAttribute("message",message);
+			model.addAttribute("status",status);
+		}
 		return "index";
 	}
 	
 	@GetMapping("/create")
 	public String create(Model model) {
+		message = "";
 		model.addAttribute("message","Welcome!!!");
 		return "form";
 	}
 	
 	@PostMapping("/create_project")
     public String createProject(@ModelAttribute Project project) {
-        projectService.saveProject(project);
+        project = projectService.saveProject(project);
+		if(project != null){
+			message = "Success in Create the Project "+project.getName();
+			status = 1;
+		}else{
+			message = "Error in Create the Project.";
+			status = 0;
+		}
         return "redirect:/";
     }
 	
 	@GetMapping("/init_project/{id}")
     public String initProject(@PathVariable Long id) {
-        projectService.initProject(id);
+        Message check = projectService.initProject(id);
+		message = check.getMessage();
+		status = check.getStatus();
         return "redirect:/";
     }
+
+	@GetMapping("/deploy_project/{id}")
+    public String deployProject(@PathVariable Long id) {
+        Message check = projectService.deployProject(id);
+		message = check.getMessage();
+		status = check.getStatus();
+        return "redirect:/";
+    }
+
+	@GetMapping("/service_project/{id}")
+    public String serviceProject(@PathVariable Long id) {
+        Message check = projectService.serviceProject(id);
+		message = check.getMessage();
+		status = check.getStatus();
+        return "redirect:/";
+    }
+
+
+	@GetMapping("/del_service_project/{id}")
+    public String delServiceProject(@PathVariable Long id) {
+        Message check = projectService.delServiceProject(id);
+		message = check.getMessage();
+		status = check.getStatus();
+        return "redirect:/";
+    }
+
+	@GetMapping("/del_deploy_project/{id}")
+    public String delDeployProject(@PathVariable Long id) {
+        Message check = projectService.delDeployProject(id);
+		message = check.getMessage();
+		status = check.getStatus();
+        return "redirect:/";
+    }
+
+	@GetMapping("/del_project/{id}")
+    public String delProject(@PathVariable Long id) {
+        Message check = projectService.delProject(id);
+		message = check.getMessage();
+		status = check.getStatus();
+        return "redirect:/";
+    }
+
 
 }
