@@ -21,7 +21,84 @@
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
-replay_pid*
-.vscode
+
+# IntelliJ
+.idea/
+
+# Eclipse
+.classpath
 .project
-.settings/*
+.settings/
+
+# NetBeans
+nbproject/
+nb-configuration.xml
+
+# Jupyter Notebooks
+.ipynb_checkpoints/
+
+# Visual Studio Code
+.vscode/
+
+# Maven
+target/
+
+# Gradle
+build/
+
+# Eclipse
+bin/
+tmp/
+*.tmp
+*.bak
+*.swp
+*~.nib
+
+# NetBeans
+build/
+nbbuild/
+dist/
+nbdist/
+nbactions.xml
+nb-configuration.xml
+
+# IntelliJ
+out/
+.idea_modules/
+
+# User-specific files
+*.iml
+*.iws
+*.ipr
+
+# Compiled bytecode
+*.class
+
+# Compiled native libraries
+*.dll
+*.so
+*.dylib
+
+# Executables
+*.exe
+*.com
+*.out
+*.app
+
+# Android
+build/
+captures/
+
+# Thumbnails
+._*
+
+# Files that might appear on external disk
+.Spotlight-V100
+.Trashes
+
+# Directories potentially created on remote AFP share
+.AppleDB
+.AppleDesktop
+Network Trash Folder
+Temporary Items
+.apdisk

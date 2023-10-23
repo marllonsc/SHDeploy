@@ -8,7 +8,8 @@ USE shdeploy;
 CREATE TABLE project (
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
-    path VARCHAR(255),
+    path_project VARCHAR(255),
+    path_app VARCHAR(255),
     git VARCHAR(255) NOT NULL,
     ip_port VARCHAR(255),
     service INT,
