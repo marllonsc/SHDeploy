@@ -40,7 +40,7 @@ public class RouterController {
 		List<Project> list = new ArrayList<Project>();
 		list = projectService.getAllProjects();
 		model.addAttribute("list",list);
-		model.addAttribute("Mysql",ExecuteCommand.executeGetReturn("minikube service "+appConfig.getDbService()+" --url"));
+		//model.addAttribute("Mysql",ExecuteCommand.executeGetReturn("minikube service "+appConfig.getDbService()+" --url"));
 		if(!message.isBlank()){
 			model.addAttribute("message",message);
 			model.addAttribute("status",status);
