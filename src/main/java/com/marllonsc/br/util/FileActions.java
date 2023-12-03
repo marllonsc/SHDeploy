@@ -115,10 +115,18 @@ public class FileActions {
                     + "git pull \n" 
                     + "mvn clean install \n" 
                     + "docker build -t " + project.getName() + ":0.0.1 . \n"
-                    + "docker run -d -p 8080:"+project.getIpPort()+" "+ project.getName() + ":0.0.1 "  
+                    + "docker run -d -p 8080:"+project.getIpPort()+" --name "+project.getName() +" "+ project.getName() + ":0.0.1 "  
                     + "" ;
 
-        }
+        }else if(ProgrammingLanguage.REACT.equals(project.getProgrammingLanguage())){
+                
+
+            return "cd "+project.getPathApp()+ " \n"
+                    + "git pull \n" 
+                    + "npm run build \n" 
+                    + "docker build -t " + project.getName() + " . \n"
+                    + "docker run -d -p 8081:"+project.getIpPort()+" --name "+project.getName() +" "+ project.getName() + ":latest "  
+                    + "" ;
 
         return "";
     }
