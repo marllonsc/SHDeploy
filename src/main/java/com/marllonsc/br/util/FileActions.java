@@ -8,6 +8,7 @@ import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 
 import com.marllonsc.br.config.AppConfig;
+import com.marllonsc.br.entity.ProgrammingLanguage;
 import com.marllonsc.br.entity.Project;
 
 public class FileActions {
@@ -107,11 +108,19 @@ public class FileActions {
     }
 
     public static String commandsDeploy(Project project) {
-         return "cd "+project.getPathApp()+ " \n"
-                + "mvn clean install \n" 
-                + "docker build -t " + project.getName() + ":0.0.1 . \n"
-                + "docker run -p 8080:"+project.getIpPort()+" "+ project.getName() + ":0.0.1 \n"  
-                + "" ;
+
+        if(ProgrammingLanguage.MAVEN.equals(project.getProgrammingLanguage())){
+                
+            return "cd "+project.getPathApp()+ " \n"
+                    + "git pull \n" 
+                    + "mvn clean install \n" 
+                    + "docker build -t " + project.getName() + ":0.0.1 . \n"
+                    + "docker run -p 8080:"+project.getIpPort()+" "+ project.getName() + ":0.0.1 \n"  
+                    + "" ;
+
+        }
+
+        return "";
     }
 
 }

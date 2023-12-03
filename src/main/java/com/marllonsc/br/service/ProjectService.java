@@ -87,12 +87,19 @@ public class ProjectService {
 		}
 
 		String fileInit = appConfig.getFileInit() + p.getName() + ".sh";
+		String deployFile = appConfig.getFileDeploy()+ p.getName() + ".sh";
 
 		check = FileActions.ExistFile(fileInit);
+		boolean checkDeployFile = FileActions.ExistFile(deployFile);
 
 		if (check) {
 			ExecuteCommand.execute("rm -rf " + fileInit);
 		}
+
+		if (checkDeployFile) {
+			ExecuteCommand.execute("rm -rf " + deployFile);
+		}
+
 
 		check = FileActions.ExistDirectory(p.getPathProject());
 		if (check) {
@@ -100,9 +107,13 @@ public class ProjectService {
 		}
 
 		FileActions.createFile(fileInit);
+		FileActions.createFile(deployFile);
 
 		FileActions.writeFille(fileInit, FileActions.createInit(p,appConfig.getPathProject()));
+		FileActions.writeFille(deployFile, FileActions.commandsDeploy(p));
+
 		check = ExecuteCommand.execute("chmod a+x " + fileInit);
+		check = ExecuteCommand.execute("chmod a+x " + deployFile);
 
 		if (check) {
 			check = ExecuteSh.execute(fileInit);
@@ -111,21 +122,6 @@ public class ProjectService {
 			}
 		} else {
 			return new Message("Error to execute chmod a+x " + fileInit, 0);
-		}
-
-		check = FileActions.ExistDirectory(p.getPathProject());
-		if (check) {
-			check = FileActions.ExistFile(p.getPathApp() + "deploy.sh");
-			if (check) {
-				check = FileActions.ExistFile(p.getPathApp() + "service.sh");
-				if (!check) {
-					return new Message("No find file service on project " + p.getName(), 0);
-				}
-			} else {
-				return new Message("No find file deploy on project " + p.getName(), 0);
-			}
-		} else {
-			return new Message("No find project folder from " + p.getName(), 0);
 		}
 
 		p.setInit(1);
@@ -141,16 +137,12 @@ public class ProjectService {
 
 		Project p = project.get();
 		boolean check = false;
+		String deployFile = appConfig.getFileDeploy()+ p.getName() + ".sh";
 
-		if(ProgrammingLanguage.MAVEN.equals(p.getProgrammingLanguage())){
-
-			ExecuteCommand.execute(FileActions.commandsDeploy(p));
-
+		check = ExecuteSh.execute(deployFile);
 			if (!check) {
-				return new Message("Error to execute on deploy " + p.getName(), 0);
-			}	
-
-		}
+				return new Message("Error to execute file deploy sh", 0);
+			}
 
 		p.setDeploy(1);
 		saveProject(p);
@@ -291,6 +283,7 @@ public class ProjectService {
 		boolean check = false;
 
 		check = ExecuteCommand.execute("rm -rf " + appConfig.getFileInit() + p.getName() + ".sh");
+		check = ExecuteCommand.execute("rm -rf " + appConfig.getFileDeploy() + p.getName() + ".sh");
 
 		if (!check) {
 				return new Message("Error in delete init file " + appConfig.getFileInit() + p.getName()
