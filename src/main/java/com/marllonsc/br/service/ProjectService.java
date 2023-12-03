@@ -139,7 +139,8 @@ public class ProjectService {
 		boolean check = false;
 		String deployFile = appConfig.getFileDeploy()+ p.getName() + ".sh";
 
-		check = ExecuteSh.execute(deployFile);
+		check = ExecuteCommand.execute("chmod a+x " + deployFile);
+		check = ExecuteCommand.execute("sh " + deployFile);
 			if (!check) {
 				return new Message("Error to execute file deploy sh", 0);
 			}
