@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page import="com.marllonsc.br.entity.ProgrammingLanguage" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -96,8 +98,8 @@
 					<div class="form-group">
 						<label for="programmingLanguage">Programming Language</label>
 						<select class="form-control" id="programmingLanguage" name="programmingLanguage" required>
-							<c:forEach var="language" items="${T(com.marllonsc.entity.ProgrammingLanguage).values()}">
-								<option value="${language}">${language}</option>
+							<c:forEach var="language" items="<%= com.marllonsc.br.entity.ProgrammingLanguage.values() %>">
+								<option value="${language.name()}">${language}</option>
 							</c:forEach>
 						</select>
 					</div>
