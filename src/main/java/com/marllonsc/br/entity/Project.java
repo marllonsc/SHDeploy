@@ -1,6 +1,9 @@
 package com.marllonsc.br.entity;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -21,13 +24,18 @@ public class Project {
 	private int init;
 	private int deploy;
 
-	public Project(Long id, String name, String pathProject, String pathApp, String git, String ipPort, int service, int init, int deploy) {
+	@Enumerated(EnumType.STRING)
+    @Column(name = "programming_language")
+    private ProgrammingLanguage programmingLanguage;
+
+	public Project(Long id, String name, String pathProject, String pathApp, ProgrammingLanguage programmingLanguage, String git, String ipPort, int service, int init, int deploy) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.pathProject = pathProject;
 		this.pathApp = pathApp;
 		this.git = git;
+		this.programmingLanguage = programmingLanguage;
 		this.ipPort = ipPort;
 		this.service = service;
 		this.init = init;
@@ -106,6 +114,14 @@ public class Project {
 
 	public void setDeploy(int deploy) {
 		this.deploy = deploy;
+	}
+
+	public ProgrammingLanguage getProgrammingLanguage(){
+		return this.programmingLanguage;
+	}
+
+	public void setProgrammingLanguage(ProgrammingLanguage programmingLanguage){
+		this.programmingLanguage = programmingLanguage;
 	}
 
 	// getters and setters

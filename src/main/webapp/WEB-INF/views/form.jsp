@@ -87,6 +87,16 @@
 							class="form-control" id="gitField" name="git"
 							placeholder="Enter Git URL" required>
 					</div>
+
+					<div class="form-group">
+						<label for="programmingLanguage">Programming Language</label>
+						<select class="form-control" id="programmingLanguage" name="programmingLanguage" required>
+							<c:forEach var="language" items="${T(com.marllonsc.entity.ProgrammingLanguage).values()}">
+								<option value="${language}">${language}</option>
+							</c:forEach>
+						</select>
+					</div>
+
 					<button type="submit" OnClick="" class="btn btn-primary">Create</button>
 				</form>
 			</div>

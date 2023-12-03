@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.marllonsc.br.config.AppConfig;
 import com.marllonsc.br.dto.Message;
+import com.marllonsc.br.entity.ProgrammingLanguage;
 import com.marllonsc.br.entity.Project;
 import com.marllonsc.br.repository.ProjectRepository;
 import com.marllonsc.br.util.ExecuteCommand;
@@ -141,43 +142,14 @@ public class ProjectService {
 		Project p = project.get();
 		boolean check = false;
 
-		String outPut = ExecuteCommand
-				.executeGetReturn("minikube kubectl -- get pod spring-boot-library --namespace=default ");
+		if(ProgrammingLanguage.MAVEN.equals(p.getProgrammingLanguage())){
 
-		check = outPut.contains("NotFound");
+			ExecuteCommand.execute(FileActions.commandsDeploy(p));
 
-		if (!check) {
-			return new Message("Project aready deploy: " + p.getName(), 0);
-		}
+			if (!check) {
+				return new Message("Error to execute on deploy " + p.getName(), 0);
+			}	
 
-		check = FileActions.ExistFile(p.getPathApp() + "deploy.sh");
-
-		if (!check) {
-			return new Message("No find file deploy on project " + p.getName(), 0);
-		}
-
-		check = ExecuteCommand.execute("chmod a+x " + p.getPathApp() + "deploy.sh");
-
-		if (!check) {
-			return new Message("Error to execute chmod a+x " + p.getPathApp() + "deploy.sh", 0);
-		}
-
-		String fileDeploy = appConfig.getFileDeploy() + p.getName() + ".sh";
-		FileActions.createFile(fileDeploy);
-
-		check = FileActions.ExistFile(fileDeploy);
-
-		FileActions.writeFille(fileDeploy, FileActions.createCommandsDeploy(p));
-
-		if (check) {
-			check = ExecuteCommand.execute("chmod a+x " + fileDeploy);
-			check = ExecuteCommand.execute("sh " + fileDeploy);
-		} else {
-			return new Message("Error to write on file " + fileDeploy, 0);
-		}
-
-		if (!check) {
-			return new Message("Error to execute on file " + fileDeploy, 0);
 		}
 
 		p.setDeploy(1);
@@ -286,30 +258,27 @@ public class ProjectService {
 		Project p = project.get();
 		boolean check = false;
 
-		String outPut = ExecuteCommand
-				.executeGetReturn("minikube kubectl -- get pod spring-boot-library --namespace=default");
-
-		check = outPut.contains("NotFound");
-
-		if (!check) {
-
-			check = ExecuteCommand.execute("kubectl delete pod " + p.getName());
+			check = ExecuteCommand.execute("docker stop " + p.getName() + ":0.0.1");
 
 			if (!check) {
-				return new Message("Error in remove pod Project " + p.getName(), 0);
+				return new Message("Error in stop container Project " + p.getName(), 0);
 			}
 
-			check = ExecuteCommand.execute("rm -rf " + appConfig.getFileDeploy() + p.getName() + ".sh");
+			check = ExecuteCommand.execute("docker rm " + p.getName() + ":0.0.1");
 
 			if (!check) {
-				return new Message("Error in delete service file " + appConfig.getFileDeploy() + p.getName()
-						+ " Project " + p.getName(), 0);
+				return new Message("Error in remove container Project " + p.getName(), 0);
+			}
+
+			check = ExecuteCommand.execute("docker rmi " + p.getName() + ":0.0.1");
+
+			if (!check) {
+				return new Message("Error in remove image Project " + p.getName(), 0);
 			}
 
 			p.setDeploy(0);
 			saveProject(p);
 
-		}
 
 		return new Message("Success in Undeploy Project " + p.getName(), 1);
 	}

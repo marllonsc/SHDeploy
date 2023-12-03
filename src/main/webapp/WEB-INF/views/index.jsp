@@ -104,17 +104,17 @@
 								href="${pageContext.request.contextPath}/del_deploy_project/${project.id}">UnDeploy
 								Project</a>
 						</c:if>
-						<c:if test="${project.service == 0}">
+						<!--c:if test="${project.service == 0}">
 							<a class="btn btn-success"
 								href="${pageContext.request.contextPath}/service_project/${project.id}">Create
 								Service</a>
 						</c:if>
-						<c:if test="${project.service != 0}">
+						< c:if test="${project.service != 0}">
 							<a class="btn btn-warning"
 								href="${pageContext.request.contextPath}/del_service_project/${project.id}">Delete
 								Service</a>
-						</c:if>
-						<c:if test="${project.service == 0 && project.deploy == 0}">
+						</c:if --->
+						<c:if test="${project.deploy == 0}">
 							<a class="btn btn-danger"
 								href="${pageContext.request.contextPath}/del_project/${project.id}">Delete
 								Project</a>
@@ -129,7 +129,8 @@
 						<li class="list-group-item"><b>Path App: </b>${project.pathApp}</li>
 						<li class="list-group-item"><b>git: </b>${project.git}</li>
 						<li class="list-group-item"><b>Service: </b>${project.ipPort}</li>
-						<li class="list-group-item"><b>Service Created: </b>${project.service == 0 ? false : true}</li>
+						<li class="list-group-item"><b>Programming Language: </b>${project.programmingLanguage}</li>
+						<!-- li class="list-group-item"><b>Service Created: </b>${project.service == 0 ? false : true}</li -->
 						<li class="list-group-item"><b>Project Init: </b>${project.init == 0 ? false : true}</li>
 						<li class="list-group-item"><b>Project Deployed: </b>${project.deploy == 0 ? false : true}</li>
 						<!-- Add more list items as needed -->
