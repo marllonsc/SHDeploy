@@ -33,10 +33,10 @@
                
                 <li class="nav-item">
                     <a class="nav-link" href="#">About</a>
-                </li>-->
+                </li>
 				<li class="nav-item"><a class="nav-link"
 					href="${pageContext.request.contextPath}/" style="color: #080404"s;>
-						Mysql IP: ${Mysql}</a></li>
+						Mysql IP: ${Mysql}</a></li>-->
 
 				<li class="nav-item"><a class="btn btn-success ml-2"
 					href="${pageContext.request.contextPath}/create">Create Project</a>
