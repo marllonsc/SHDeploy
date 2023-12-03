@@ -251,13 +251,13 @@ public class ProjectService {
 		Project p = project.get();
 		boolean check = false;
 
-			check = ExecuteCommand.execute("docker stop " + p.getName() + ":0.0.1");
+			check = ExecuteCommand.execute("docker stop " + p.getName());
 
 			if (!check) {
 				return new Message("Error in stop container Project " + p.getName(), 0);
 			}
 
-			check = ExecuteCommand.execute("docker rm " + p.getName() + ":0.0.1");
+			check = ExecuteCommand.execute("docker rm " + p.getName());
 
 			if (!check) {
 				return new Message("Error in remove container Project " + p.getName(), 0);
