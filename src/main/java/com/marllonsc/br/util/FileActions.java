@@ -128,7 +128,11 @@ public class FileActions {
                     + "docker run -d -p 8081:"+project.getIpPort()+" --name "+project.getName() +" "+ project.getName() + ":latest "  
                     + "" ;
 
+        }
+
         return "";
+        
     }
+
 
 }
