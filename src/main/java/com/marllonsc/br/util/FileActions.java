@@ -115,7 +115,7 @@ public class FileActions {
                     + "git pull \n" 
                     + "mvn clean install \n" 
                     + "docker build -t " + project.getName() + ":0.0.1 . \n"
-                    + "docker run -p 8080:"+project.getIpPort()+" "+ project.getName() + ":0.0.1 \n"  
+                    + "docker run -p 8080:"+project.getIpPort()+" "+ project.getName() + ":0.0.1 "  
                     + "" ;
 
         }
