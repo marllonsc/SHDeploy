@@ -104,16 +104,7 @@
 								href="${pageContext.request.contextPath}/del_deploy_project/${project.id}">UnDeploy
 								Project</a>
 						</c:if>
-						<!--c:if test="${project.service == 0}">
-							<a class="btn btn-success"
-								href="${pageContext.request.contextPath}/service_project/${project.id}">Create
-								Service</a>
-						</c:if>
-						< c:if test="${project.service != 0}">
-							<a class="btn btn-warning"
-								href="${pageContext.request.contextPath}/del_service_project/${project.id}">Delete
-								Service</a>
-						</c:if --->
+
 						<c:if test="${project.deploy == 0}">
 							<a class="btn btn-danger"
 								href="${pageContext.request.contextPath}/del_project/${project.id}">Delete
