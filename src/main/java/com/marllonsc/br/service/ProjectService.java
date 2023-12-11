@@ -263,7 +263,12 @@ public class ProjectService {
 				return new Message("Error in remove container Project " + p.getName(), 0);
 			}
 
-			check = ExecuteCommand.execute("docker rmi " + p.getName() + ":0.0.1");
+			 if(ProgrammingLanguage.MAVEN.equals(p.getProgrammingLanguage())){
+				 check = ExecuteCommand.execute("docker rmi " + p.getName() + ":0.0.1");
+			 }else if(ProgrammingLanguage.REACT.equals(p.getProgrammingLanguage())){
+				 check = ExecuteCommand.execute("docker rmi " + p.getName());
+			 }
+			
 
 			if (!check) {
 				return new Message("Error in remove image Project " + p.getName(), 0);
