@@ -123,6 +123,7 @@ public class FileActions {
 
             return "cd "+project.getPathApp()+ " \n"
                     + "git pull \n" 
+                     + "npm i \n" 
                     + "npm run build \n" 
                     + "docker build -t " + project.getName() + " . \n"
                     + "docker run -d -p "+project.getIpPort()+":80 --name "+project.getName() +" "+ project.getName() + ":latest "  
