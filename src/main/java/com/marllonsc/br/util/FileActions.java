@@ -125,7 +125,7 @@ public class FileActions {
                     + "git pull \n" 
                     + "npm run build \n" 
                     + "docker build -t " + project.getName() + " . \n"
-                    + "docker run -d -p "+project.getIpPort()+":80 --name "+project.getName() +" "+ project.getName() + ":latest "  
+                    + "docker run -d -p "+project.getIpPort()+":80 --name "+project.getName() +" "+ project.getName()  
                     + "" ;
 
         }
