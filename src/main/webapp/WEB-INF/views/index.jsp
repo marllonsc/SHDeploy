@@ -46,7 +46,7 @@
 	</nav>
 
 	<header class="bg-primary text-white text-center py-5">
-		<h1>System to Deploy Application on Kubernetes</h1>
+		<h1>System to Deploy Application to Docker Server</h1>
 		<!-- Add any header content here -->
 	</header>
 
