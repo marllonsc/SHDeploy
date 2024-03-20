@@ -13,7 +13,7 @@ public interface RegistryActionRepository extends JpaRepository<RegistryAction, 
 
     // Method to retrieve all RegistryAction instances with their associated
     // projects
-    @Query("SELECT ra FROM RegistryAction ra LEFT JOIN FETCH ra.project")
+    @Query("SELECT ra FROM RegistryAction ra LEFT JOIN FETCH ra.projectId")
     List<RegistryAction> findAllWithProject();
 
 }
