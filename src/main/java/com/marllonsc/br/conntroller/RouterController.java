@@ -91,8 +91,8 @@ public class RouterController {
 																										// implement
 																										// this method
 
-		model.addAttribute("pagedList", pagedList);
-		model.addAttribute("totalPages", totalPages);
+		model.addAttribute("pagedList", pagedList.getContent());
+		model.addAttribute("totalPages", pagedList.getTotalPages());
 		model.addAttribute("page", page);
 
 		message = "";
