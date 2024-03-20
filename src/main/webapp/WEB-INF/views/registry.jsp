@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="com.marllonsc.br.entity.ProgrammingLanguage" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -49,7 +50,7 @@
 				<li class="nav-item"><a class="btn btn-success ml-2"
 					href="${pageContext.request.contextPath}/create">Create Project</a>
 				</li>
-				<li class="nav-item"><a class="btn btn-alert ml-2"
+				<li class="nav-item"><a class="btn btn-info ml-2"
 					href="${pageContext.request.contextPath}/registry">Registry Actions</a>
 				</li>
 			</ul>
@@ -70,6 +71,15 @@
 				<h2 class="card-title"Registry Actions</h2>
 
         <h1 class="mb-4">Registry Actions</h1>
+
+
+        <c:if test="${list.size() == 0}">
+			<br />
+			<h5>There is no Registry Actions!</h5>
+			<br />
+			<br />
+		</c:if>
+
         
         <table class="table">
             <thead>
@@ -87,7 +97,7 @@
                         <td>${registryAction.id}</td>
                         <td>${registryAction.projectId.name}</td>
                         <td>${registryAction.actionName}</td>
-                        <td>${registryAction.dateExecuted}</td>
+                        <td><fmt:formatDate value="${registryAction.dateExecuted}" pattern="yyyy-MM-dd HH:mm:ss" /></td>
                         <td>${registryAction.user}</td>
                     </tr>
                 </c:forEach>

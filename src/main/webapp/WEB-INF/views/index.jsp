@@ -41,7 +41,7 @@
 				<li class="nav-item"><a class="btn btn-success ml-2"
 					href="${pageContext.request.contextPath}/create">Create Project</a>
 				</li>
-				<li class="nav-item"><a class="btn btn-alert ml-2"
+				<li class="nav-item"><a class="btn btn-info ml-2"
 					href="${pageContext.request.contextPath}/registry">Registry Actions</a>
 				</li>
 			</ul>
