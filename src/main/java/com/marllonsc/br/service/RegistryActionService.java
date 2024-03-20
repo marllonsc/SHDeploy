@@ -6,6 +6,8 @@ import org.springframework.stereotype.Service;
 import com.marllonsc.br.entity.RegistryAction;
 import com.marllonsc.br.repository.RegistryActionRepository;
 
+import io.micrometer.common.util.StringUtils;
+
 import java.util.List;
 
 @Service
@@ -26,6 +28,9 @@ public class RegistryActionService {
 
     // Method to insert a new RegistryAction instance
     public RegistryAction insertRegistryAction(RegistryAction registryAction) {
+        if (StringUtils.isEmpty(registryAction.getUser())) {
+            registryAction.setUser("Linux Server");
+        }
         return registryActionRepository.save(registryAction);
     }
 }
