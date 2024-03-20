@@ -17,3 +17,12 @@ CREATE TABLE project (
     init INT,
     deploy INT
 );
+
+CREATE TABLE registry_action (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    project_id INT,
+    action_name VARCHAR(255) NOT NULL,
+    date_executed DATETIME NOT NULL,
+    user VARCHAR(100) NOT NULL,
+    FOREIGN KEY (project_id) REFERENCES project(id)
+);

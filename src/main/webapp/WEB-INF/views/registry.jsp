@@ -50,7 +50,7 @@
 					href="${pageContext.request.contextPath}/create">Create Project</a>
 				</li>
 				<li class="nav-item"><a class="btn btn-alert ml-2"
-					href="${pageContext.request.contextPath}/create">Registry Actions</a>
+					href="${pageContext.request.contextPath}/registry">Registry Actions</a>
 				</li>
 			</ul>
 		</div>
@@ -64,55 +64,44 @@
 	<main class="container mt-4">
 		<!-- Your main content goes here -->
 
-		<!-- Project Form -->
+        	<!-- Project Form -->
 		<div class="card">
 			<div class="card-body">
-				<h2 class="card-title">Create Project</h2>
+				<h2 class="card-title"Registry Actions</h2>
 
-				<!-- Project Form -->
-				<form action="${pageContext.request.contextPath}/create_project"
-					method="post">
-					<div class="form-group">
-						<label for="projectName">Name</label> <input type="text"
-							class="form-control" id="projectName" name="name"
-							placeholder="Enter project name" required>
-					</div>
-					<div class="form-group">
-						<label for="projectName">Path App</label> <input type="text"
-							class="form-control" id="projectPath" name="pathApp"
-							placeholder="Enter project path App">
-					</div>
-					<div class="form-group">
-						<label for="projectName">Path Project</label> <input type="text"
-							class="form-control" id="appPath" name="pathProject"
-							placeholder="Enter project Path project">
-					</div>
-					<div class="form-group">
-						<label for="gitField">Git</label> <input type="text"
-							class="form-control" id="gitField" name="git"
-							placeholder="Enter Git URL" required>
-					</div>
+        <h1 class="mb-4">Registry Actions</h1>
+        
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Project Name</th>
+                    <th>Action Name</th>
+                    <th>Date Executed</th>
+                    <th>User</th>
+                </tr>
+            </thead>
+            <tbody>
+                <c:forEach var="registryAction" items="${list}">
+                    <tr>
+                        <td>${registryAction.id}</td>
+                        <td>${registryAction.project.name}</td>
+                        <td>${registryAction.actionName}</td>
+                        <td>${registryAction.dateExecuted}</td>
+                        <td>${registryAction.user}</td>
+                    </tr>
+                </c:forEach>
+            </tbody>
+        </table>
+    </div>
 
-					<div class="form-group">
-						<label for="ipPort">Port</label>
-						<input type="text" class="form-control" id="ipPort" name="ipPort" placeholder="Enter Port">
-					</div>
+</div>
+</div>
 
-					<div class="form-group">
-						<label for="programmingLanguage">Programming Language</label>
-						<select class="form-control" id="programmingLanguage" name="programmingLanguage" required>
-							<c:forEach var="language" items="<%= com.marllonsc.br.entity.ProgrammingLanguage.values() %>">
-								<option value="${language.name()}">${language}</option>
-							</c:forEach>
-						</select>
-					</div>
 
-					<button type="submit" OnClick="" class="btn btn-primary">Create</button>
-				</form>
-			</div>
-		</div>
-		<br />
-	</main>
+
+
+    </main>
 
 	<footer class="bg-dark text-white text-center py-3">
 		<!-- Your footer content goes here -->

@@ -1,5 +1,6 @@
 package com.marllonsc.br.service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -8,8 +9,10 @@ import org.springframework.stereotype.Service;
 
 import com.marllonsc.br.config.AppConfig;
 import com.marllonsc.br.dto.Message;
+import com.marllonsc.br.entity.Actions;
 import com.marllonsc.br.entity.ProgrammingLanguage;
 import com.marllonsc.br.entity.Project;
+import com.marllonsc.br.entity.RegistryAction;
 import com.marllonsc.br.repository.ProjectRepository;
 import com.marllonsc.br.util.ExecuteCommand;
 import com.marllonsc.br.util.ExecuteSh;
@@ -20,11 +23,15 @@ public class ProjectService {
 
 	private final ProjectRepository projectRepository;
 
+	private final RegistryActionService registryActionService;
+
 	private final AppConfig appConfig;
 
 	@Autowired
-	public ProjectService(ProjectRepository projectRepository, AppConfig appConfig) {
+	public ProjectService(ProjectRepository projectRepository, AppConfig appConfig,
+			RegistryActionService registryActionService) {
 		this.projectRepository = projectRepository;
+		this.registryActionService = registryActionService;
 		this.appConfig = appConfig;
 	}
 
@@ -46,39 +53,36 @@ public class ProjectService {
 
 	public Message initProject(Long id) {
 
-		
-
 		Optional<Project> project = getProjectById(id);
 
 		String pathApp = appConfig.getPathApp();
 		String pathProject = appConfig.getPathProject();
 
-		if(!FileActions.ExistDirectory(pathApp)){
+		if (!FileActions.ExistDirectory(pathApp)) {
 			FileActions.createFile("folder.sh");
 			FileActions.writeFille("folder.sh", FileActions.createfolder(appConfig));
 			ExecuteCommand.execute("chmod a+x " + "folder.sh");
-			ExecuteSh.execute(System.getProperty("user.dir")+"/folder.sh");
+			ExecuteSh.execute(System.getProperty("user.dir") + "/folder.sh");
 			ExecuteCommand.execute("rm -rf " + "folder.sh");
 		}
 
 		boolean check = false;
 		Project p = project.get();
 
-		if(!p.getPathApp().endsWith("/")){
-			p.setPathApp(p.getPathApp()+"/");
+		if (!p.getPathApp().endsWith("/")) {
+			p.setPathApp(p.getPathApp() + "/");
 		}
 
-		if(!p.getPathProject().endsWith("/")){
-			p.setPathProject(p.getPathProject()+"/");
+		if (!p.getPathProject().endsWith("/")) {
+			p.setPathProject(p.getPathProject() + "/");
 		}
 
 		check = FileActions.checkPath(p);
 
-		if(!check){
-			p.setPathApp(p.getPathProject()+p.getPathApp());
+		if (!check) {
+			p.setPathApp(p.getPathProject() + p.getPathApp());
 		}
 
-		
 		if (!p.getPathApp().startsWith(pathProject, 0)) {
 			p.setPathApp(pathProject + project.get().getPathApp());
 		}
@@ -87,7 +91,7 @@ public class ProjectService {
 		}
 
 		String fileInit = appConfig.getFileInit() + p.getName() + ".sh";
-		String deployFile = appConfig.getFileDeploy()+ p.getName() + ".sh";
+		String deployFile = appConfig.getFileDeploy() + p.getName() + ".sh";
 
 		check = FileActions.ExistFile(fileInit);
 		boolean checkDeployFile = FileActions.ExistFile(deployFile);
@@ -100,7 +104,6 @@ public class ProjectService {
 			ExecuteCommand.execute("rm -rf " + deployFile);
 		}
 
-
 		check = FileActions.ExistDirectory(p.getPathProject());
 		if (check) {
 			ExecuteCommand.execute("rm -rf " + p.getPathProject());
@@ -109,7 +112,7 @@ public class ProjectService {
 		FileActions.createFile(fileInit);
 		FileActions.createFile(deployFile);
 
-		FileActions.writeFille(fileInit, FileActions.createInit(p,appConfig.getPathProject()));
+		FileActions.writeFille(fileInit, FileActions.createInit(p, appConfig.getPathProject()));
 		FileActions.writeFille(deployFile, FileActions.commandsDeploy(p));
 
 		check = ExecuteCommand.execute("chmod a+x " + fileInit);
@@ -127,6 +130,8 @@ public class ProjectService {
 		p.setInit(1);
 		saveProject(p);
 
+		registryActionService.insertRegistryAction(new RegistryAction(p, Actions.INIT, new Date(), null));
+
 		return new Message("Success in init Project " + p.getName(), 1);
 
 	}
@@ -137,16 +142,18 @@ public class ProjectService {
 
 		Project p = project.get();
 		boolean check = false;
-		String deployFile = appConfig.getFileDeploy()+ p.getName() + ".sh";
+		String deployFile = appConfig.getFileDeploy() + p.getName() + ".sh";
 
 		check = ExecuteCommand.execute("chmod a+x " + deployFile);
 		check = ExecuteCommand.execute("sh " + deployFile);
-			if (!check) {
-				return new Message("Error to execute file deploy sh", 0);
-			}
+		if (!check) {
+			return new Message("Error to execute file deploy sh", 0);
+		}
 
 		p.setDeploy(1);
 		saveProject(p);
+
+		registryActionService.insertRegistryAction(new RegistryAction(p, Actions.DEPLOY, new Date(), null));
 
 		return new Message("Success in deploy Project " + p.getName(), 1);
 
@@ -243,7 +250,6 @@ public class ProjectService {
 		return new Message("Success in remove service Project " + p.getName(), 1);
 	}
 
-
 	public Message delDeployProject(long id) {
 
 		Optional<Project> project = getProjectById(id);
@@ -251,32 +257,32 @@ public class ProjectService {
 		Project p = project.get();
 		boolean check = false;
 
-			check = ExecuteCommand.execute("docker stop " + p.getName());
+		check = ExecuteCommand.execute("docker stop " + p.getName());
 
-			if (!check) {
-				return new Message("Error in stop container Project " + p.getName(), 0);
-			}
+		if (!check) {
+			return new Message("Error in stop container Project " + p.getName(), 0);
+		}
 
-			check = ExecuteCommand.execute("docker rm " + p.getName());
+		check = ExecuteCommand.execute("docker rm " + p.getName());
 
-			if (!check) {
-				return new Message("Error in remove container Project " + p.getName(), 0);
-			}
+		if (!check) {
+			return new Message("Error in remove container Project " + p.getName(), 0);
+		}
 
-			 if(ProgrammingLanguage.MAVEN.equals(p.getProgrammingLanguage())){
-				 check = ExecuteCommand.execute("docker rmi " + p.getName() + ":0.0.1");
-			 }else if(ProgrammingLanguage.REACT.equals(p.getProgrammingLanguage())){
-				 check = ExecuteCommand.execute("docker rmi " + p.getName());
-			 }
-			
+		if (ProgrammingLanguage.MAVEN.equals(p.getProgrammingLanguage())) {
+			check = ExecuteCommand.execute("docker rmi " + p.getName() + ":0.0.1");
+		} else if (ProgrammingLanguage.REACT.equals(p.getProgrammingLanguage())) {
+			check = ExecuteCommand.execute("docker rmi " + p.getName());
+		}
 
-			if (!check) {
-				return new Message("Error in remove image Project " + p.getName(), 0);
-			}
+		if (!check) {
+			return new Message("Error in remove image Project " + p.getName(), 0);
+		}
 
-			p.setDeploy(0);
-			saveProject(p);
+		p.setDeploy(0);
+		saveProject(p);
 
+		registryActionService.insertRegistryAction(new RegistryAction(p, Actions.UNDEPLOY, new Date(), null));
 
 		return new Message("Success in Undeploy Project " + p.getName(), 1);
 	}
@@ -292,32 +298,32 @@ public class ProjectService {
 		check = ExecuteCommand.execute("rm -rf " + appConfig.getFileDeploy() + p.getName() + ".sh");
 
 		if (!check) {
-				return new Message("Error in delete init file " + appConfig.getFileInit() + p.getName()
-						+ " Project " + p.getName(), 0);
-			}
-		
+			return new Message("Error in delete init file " + appConfig.getFileInit() + p.getName()
+					+ " Project " + p.getName(), 0);
+		}
 
-		List<Project> projects =  getAllProjects();
+		List<Project> projects = getAllProjects();
 		boolean gitSame = false;
 		for (Project p2 : projects) {
-			if(p2.getPathProject().equals(p.getPathProject()) && p2.getId()!= p.getId()){
-				gitSame=true;
+			if (p2.getPathProject().equals(p.getPathProject()) && p2.getId() != p.getId()) {
+				gitSame = true;
 				break;
 			}
 		}
 
-		if(!gitSame)
+		if (!gitSame)
 			check = ExecuteCommand.execute("rm -rf " + p.getPathProject());
 
 		if (!check) {
-				return new Message("Error in delete directorio " + appConfig.getPathProject() + p.getName()
-						+ " Project " + p.getName(), 0);
-			}
+			return new Message("Error in delete directorio " + appConfig.getPathProject() + p.getName()
+					+ " Project " + p.getName(), 0);
+		}
 
-		deleteProject(id);	
+		deleteProject(id);
+
+		registryActionService.insertRegistryAction(new RegistryAction(p, Actions.DELETE, new Date(), null));
 
 		return new Message("Success in delete Project " + p.getName(), 1);
 	}
-
 
 }
