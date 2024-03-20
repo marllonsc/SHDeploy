@@ -5,12 +5,14 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.marllonsc.br.config.AppConfig;
 import com.marllonsc.br.dto.Message;
@@ -67,12 +69,35 @@ public class RouterController {
 	}
 
 	@GetMapping("/registry")
-	public String registry(Model model) {
-		List<RegistryAction> list = new ArrayList<RegistryAction>();
-		list = registryActionService.findAllWithProject();
-		model.addAttribute("list", list);
+	public String registry(Model model, @RequestParam(defaultValue = "1") int page) {
+		// Number of items per page
+		int pageSize = 10; // Adjust as needed
+
+		// Retrieve the total number of registry actions
+		long totalItems = registryActionService.countAll(); // You need to implement this method
+
+		// Calculate the total number of pages
+		int totalPages = (int) Math.ceil((double) totalItems / pageSize);
+
+		// Validate the page number to ensure it's within the range
+		if (page < 1) {
+			page = 1;
+		} else if (page > totalPages) {
+			page = totalPages;
+		}
+
+		// Retrieve the subset of registry actions for the current page
+		Page<RegistryAction> pagedList = registryActionService.findPagedWithProject(page, pageSize); // You need to
+																										// implement
+																										// this method
+
+		model.addAttribute("pagedList", pagedList);
+		model.addAttribute("totalPages", totalPages);
+		model.addAttribute("page", page);
+
 		message = "";
 		model.addAttribute("message", "Welcome!!!");
+
 		return "registry";
 	}
 
