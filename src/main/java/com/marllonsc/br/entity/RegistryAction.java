@@ -30,7 +30,7 @@ public class RegistryAction {
     }
 
     public RegistryAction(Project projectId, Actions actionName, Date dateExecuted, String user) {
-        this.project = projectId;
+        this.projectId = projectId;
         this.actionName = actionName;
         this.dateExecuted = dateExecuted;
         this.user = user;
@@ -46,11 +46,11 @@ public class RegistryAction {
     }
 
     public Project getProjectId() {
-        return project;
+        return projectId;
     }
 
     public void setProjectId(Project projectId) {
-        this.project = projectId;
+        this.projectId = projectId;
     }
 
     public Actions getActionName() {
