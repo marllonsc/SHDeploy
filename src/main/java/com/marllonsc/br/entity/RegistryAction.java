@@ -13,7 +13,7 @@ public class RegistryAction {
 
     @ManyToOne
     @JoinColumn(name = "project_id")
-    private Project project;
+    private Project projectId;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "action_name", nullable = false)
@@ -29,8 +29,8 @@ public class RegistryAction {
     public RegistryAction() {
     }
 
-    public RegistryAction(Project project, Actions actionName, Date dateExecuted, String user) {
-        this.project = project;
+    public RegistryAction(Project projectId, Actions actionName, Date dateExecuted, String user) {
+        this.project = projectId;
         this.actionName = actionName;
         this.dateExecuted = dateExecuted;
         this.user = user;
@@ -49,8 +49,8 @@ public class RegistryAction {
         return project;
     }
 
-    public void setProjectId(Project project) {
-        this.project = project;
+    public void setProjectId(Project projectId) {
+        this.project = projectId;
     }
 
     public Actions getActionName() {

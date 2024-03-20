@@ -85,7 +85,7 @@
                 <c:forEach var="registryAction" items="${list}">
                     <tr>
                         <td>${registryAction.id}</td>
-                        <td>${registryAction.project.name}</td>
+                        <td>${registryAction.projectId.name}</td>
                         <td>${registryAction.actionName}</td>
                         <td>${registryAction.dateExecuted}</td>
                         <td>${registryAction.user}</td>
