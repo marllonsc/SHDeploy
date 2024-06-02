@@ -36,7 +36,7 @@ public class ProjectService {
 	}
 
 	public List<Project> getAllProjects() {
-		return projectRepository.findAll();
+		return projectRepository.findByAtivo(1);
 	}
 
 	public Optional<Project> getProjectById(Long id) {
@@ -48,7 +48,12 @@ public class ProjectService {
 	}
 
 	public void deleteProject(Long id) {
-		projectRepository.deleteById(id);
+		// projectRepository.deleteById(id);
+		Optional<Project> project = projectRepository.findById(id);
+		if (project.isPresent()) {
+			project.get().setAtivo(0);
+			projectRepository.save(project.get());
+		}
 	}
 
 	public Message initProject(Long id) {

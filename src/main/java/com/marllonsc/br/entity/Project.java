@@ -23,12 +23,14 @@ public class Project {
 	private int service;
 	private int init;
 	private int deploy;
+	private int ativo;
 
 	@Enumerated(EnumType.STRING)
-    @Column(name = "programming_language")
-    private ProgrammingLanguage programmingLanguage;
+	@Column(name = "programming_language")
+	private ProgrammingLanguage programmingLanguage;
 
-	public Project(Long id, String name, String pathProject, String pathApp, ProgrammingLanguage programmingLanguage, String git, String ipPort, int service, int init, int deploy) {
+	public Project(Long id, String name, String pathProject, String pathApp, ProgrammingLanguage programmingLanguage,
+			String git, String ipPort, int service, int init, int deploy, int ativo) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -40,9 +42,11 @@ public class Project {
 		this.service = service;
 		this.init = init;
 		this.deploy = deploy;
+		this.ativo = ativo;
 	}
-	
-	public Project() {}
+
+	public Project() {
+	}
 
 	public Long getId() {
 		return id;
@@ -116,16 +120,22 @@ public class Project {
 		this.deploy = deploy;
 	}
 
-	public ProgrammingLanguage getProgrammingLanguage(){
+	public ProgrammingLanguage getProgrammingLanguage() {
 		return this.programmingLanguage;
 	}
 
-	public void setProgrammingLanguage(ProgrammingLanguage programmingLanguage){
+	public void setProgrammingLanguage(ProgrammingLanguage programmingLanguage) {
 		this.programmingLanguage = programmingLanguage;
 	}
 
+	public int getAtivo() {
+		return service;
+	}
+
+	public void setAtivo(int ativo) {
+		this.ativo = ativo;
+	}
+
 	// getters and setters
-	
-	
 
 }
