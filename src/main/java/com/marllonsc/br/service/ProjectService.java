@@ -44,6 +44,7 @@ public class ProjectService {
 	}
 
 	public Project saveProject(Project project) {
+		project.setAtivo(1);
 		return projectRepository.save(project);
 	}
 
