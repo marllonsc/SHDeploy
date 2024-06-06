@@ -1,9 +1,11 @@
 pipeline {
-  agent none
-  
+  agent any
+  tools {
+    maven 'MAVEN'
+  }
   environment {
     // Define any necessary environment variables here
-    SONARQUBE_SCANNER = 'SonarQube Scanner'
+    SONARQUBE_SCANNER = 'SonarQube_server'
   }
 
   stages {
