@@ -15,6 +15,7 @@ CREATE TABLE IF NOT EXISTS project (
     service INT,
     init INT,
     deploy INT,
+    ativo INT,
     programming_language VARCHAR(50) NOT NULL
 );
 
