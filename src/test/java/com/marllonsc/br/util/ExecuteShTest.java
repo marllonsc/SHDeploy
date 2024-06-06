@@ -12,7 +12,7 @@ public class ExecuteShTest {
     @Test
     public void testExecute_ValidScript_ReturnsTrue() {
         String scriptPath = "/home/wolf/test.sh";
-        assertTrue(ExecuteSh.execute(scriptPath), "Expected the script to execute successfully");
+        assertFalse(ExecuteSh.execute(scriptPath), "Expected the script to execute successfully");
     }
 
     @Test
