@@ -332,4 +332,25 @@ public class ProjectService {
 		return new Message("Success in delete Project " + p.getName(), 1);
 	}
 
+	public String jenkisDeploy(Project project){
+
+		try {
+			Project pCheck = projectRepository.findByNameAndAtivo(project.getName(),1);
+
+			if(pCheck == null){
+				project = saveProject(project);
+			}else{
+				project = pCheck;
+			}
+
+			initProject(project.getId());
+
+			deployProject(project.getId());
+
+			return "Deployment successful for project: "+project.getName();
+		}catch (Exception e){
+			return "Deployment failed for project: "+project.getName();
+		}
+	}
+
 }
