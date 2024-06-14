@@ -134,10 +134,13 @@
 			</activation>
             <properties>
                 <sonar.host.url>http://192.168.1.13:9001</sonar.host.url>
-				<sonar.exclusions>com/marllonsc/br/conntroller/**, com/marllonsc/br/entity/**</sonar.exclusions>
                 <!--sonar.login>your-dev-sonar-token</sonar.login>
                 <sonar.projectName>your-project-dev</sonar.projectName>
                 <sonar.branch.name>develop</sonar.branch.name-->
+				<sonar.coverage.exclusions>
+					**/com/marllonsc/br/conntroller/**,
+					**/com/marllonsc/br/entity/**
+				</sonar.coverage.exclusions>
             </properties>
         </profile>
 
