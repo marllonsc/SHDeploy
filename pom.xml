@@ -121,10 +121,10 @@
 						</goals>
 						<configuration>
 							<excludes>
-								<exclude>com/marllonsc/br/entiy/**</exclude>
-								<exclude>com/marllonsc/br/repository/**</exclude>
-								<exclude>com/marllonsc/br/conntroller/**</exclude>
-								<exclude>com/marllonsc/br/dto/**</exclude>
+								<exclude>src/main/java/com/marllonsc/br/entiy/**</exclude>
+								<exclude>src/main/java/com/marllonsc/br/repository/**</exclude>
+								<exclude>src/main/java/com/marllonsc/br/conntroller/**</exclude>
+								<exclude>src/main/java/com/marllonsc/br/dto/**</exclude>
 							</excludes>
 						</configuration>
 					</execution>
