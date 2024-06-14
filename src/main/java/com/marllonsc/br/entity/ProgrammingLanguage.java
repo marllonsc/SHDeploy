@@ -8,6 +8,4 @@ public enum ProgrammingLanguage {
     REACT,
     MAVEN,
 
-    // Add more languages as needed
-
 }
