@@ -124,6 +124,7 @@
 								<exclude>com/marllonsc/br/entiy/**</exclude>
 								<exclude>com/marllonsc/br/repository/**</exclude>
 								<exclude>com/marllonsc/br/conntroller/**</exclude>
+								<exclude>com/marllonsc/br/dto/**</exclude>
 							</excludes>
 						</configuration>
 					</execution>
