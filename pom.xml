@@ -139,7 +139,8 @@
                 <sonar.branch.name>develop</sonar.branch.name-->
 				<sonar.coverage.exclusions>
 					**/com/marllonsc/br/conntroller/**,
-					**/com/marllonsc/br/entity/**
+					**/com/marllonsc/br/entity/**,
+					**/com/marllonsc/br/dto/**
 				</sonar.coverage.exclusions>
             </properties>
         </profile>
